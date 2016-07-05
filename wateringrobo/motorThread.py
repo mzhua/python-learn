@@ -17,6 +17,7 @@ class MotorThread(threading.Thread):
             pins = []
         self.pins = pins
         self.angel = angel
+        self.turnedCounts = 0
         self.exitFlag = 0
 
         GPIO.setmode(GPIO.BCM)
@@ -54,8 +55,12 @@ class MotorThread(threading.Thread):
                     index = 3
             time.sleep(0.002)
             loop_counts -= 1
+            self.turnedCounts += 1
 
         print "Exiting " + self.name
 
     def clear(self):
         self.exitFlag = 1
+
+    def getTurnedCounts(self):
+        return self.turnedCounts

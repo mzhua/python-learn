@@ -19,6 +19,7 @@ class Motor:
         """
         if angel == 0:
             return
+
         if not self.isMotorRunning() or instantChange:
             self._changeMotorStatus(True)
 
@@ -35,6 +36,7 @@ class Motor:
             self._changeMotorStatus(False)
         else:
             print 'the motor is running, please wait a moment'
+
         return self.isMotorRunning()
 
     def isMotorRunning(self):

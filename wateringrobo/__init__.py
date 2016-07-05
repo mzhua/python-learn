@@ -1,6 +1,5 @@
-import time
-
 import RPi.GPIO as GPIO
+import time
 
 from motor import Motor
 
@@ -51,6 +50,11 @@ loop = True
 try:
     while loop:
         time.sleep(5)
+        # text = raw_input()
+        # if text == 'f':
+        #     motor.turnWithAngel(30)
+        # elif text == 'b':
+        #     motor.turnWithAngel(-30)
 except KeyboardInterrupt:
     loop = False
 

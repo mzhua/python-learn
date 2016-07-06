@@ -9,12 +9,13 @@ DIRECTION_ANTI_CLOCK_WISE = 1
 
 
 class MotorThread(threading.Thread):
-    def __init__(self, pins=None, angel=30):
+    def __init__(self, pins=None, angel=30, exit_callback=None):
         threading.Thread.__init__(self)
         if pins is None:
             pins = [2, 3, 4, 14]
         self.pins = pins
         self.angel = angel
+        self.exit_callback = exit_callback
         self.turnedCounts = 0
         self.exitFlag = 0
         self._rollDirection = DIRECTION_CLOCK_WISE
@@ -55,6 +56,8 @@ class MotorThread(threading.Thread):
                 self.turnedCounts += 1
         except AttributeError:
             pass
+        if self.exit_callback is not None:
+            self.exit_callback()
 
     def clear(self):
         self.exitFlag = 1

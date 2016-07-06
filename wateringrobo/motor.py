@@ -4,12 +4,15 @@ from motorThread import MotorThread
 motorThread = None
 
 
-class Motor:
+class Motor(object):
     def __init__(self, pins=None):
         if pins is None:
             pins = []
         self.pins = pins
         self._isRunning = False
+
+    def _motor_thread_exit_callback(self):
+        self._change_motor_status(False)
 
     def turn_with_angel(self, angel=30, instant_change=False):
         """
@@ -30,10 +33,9 @@ class Motor:
             if motorThread is not None:
                 motorThread.clear()
 
-            motorThread = MotorThread(self.pins, angel)
+            motorThread = MotorThread(self.pins, angel, self._motor_thread_exit_callback)
             motorThread.start()
 
-            self._change_motor_status(False)
         else:
             print 'the motor is running, please wait a moment'
 

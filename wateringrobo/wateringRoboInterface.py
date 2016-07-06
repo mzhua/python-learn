@@ -1,4 +1,4 @@
-class WateringInterface:
+class WateringRoboInterface:
     def __init__(self):
         pass
 
@@ -6,4 +6,7 @@ class WateringInterface:
         pass
 
     def stop_watering(self):
+        pass
+
+    def exit(self):
         pass

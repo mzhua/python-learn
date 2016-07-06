@@ -1,27 +1,37 @@
 from motor import Motor
-from wateringInterface import WateringInterface
-from wateringRobo import WateringRobo
-
-motor = Motor([2, 3, 4, 14])
+from wateringRoboInterface import WateringRoboInterface
+from wateringRobo import robo
 
 
-class MainCallback(WateringInterface):
+class MainCallback(WateringRoboInterface):
     def __init__(self):
-        WateringInterface.__init__(self)
+        WateringRoboInterface.__init__(self)
+        """
+        initial your device below
+        """
+        self.motor = Motor([2, 3, 4, 14])
 
     def start_watering(self):
-        WateringInterface.start_watering(self)
-        global motor
-        motor.turnWithAngel(60)
+        WateringRoboInterface.start_watering(self)
+        """
+        input your code below
+        """
+        self.motor.turnWithAngel(60)
 
     def stop_watering(self):
-        WateringInterface.stop_watering(self)
-        global motor
-        motor.turnWithAngel(-60)
+        WateringRoboInterface.stop_watering(self)
+        """
+        input your code below
+        """
+        self.motor.turnWithAngel(-60)
+
+    def exit(self):
+        WateringRoboInterface.exit(self)
+        """
+        input your code below
+        """
+        self.motor.stop()
 
 
 if __name__ == "__main__":
-    wateringrobo = WateringRobo(27)
-
-    wateringrobo.start(MainCallback())
-
+    robo.start(27, MainCallback())

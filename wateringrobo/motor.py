@@ -11,7 +11,7 @@ class Motor:
         self.pins = pins
         self._isRunning = False
 
-    def turnWithAngel(self, angel=30, instant_change=True):
+    def turnWithAngel(self, angel=30, instant_change=False):
         """
         :param instant_change: change the turn direction immediately
         :param angel: the angel want to turn,set negative to turn anticlockwise and set positive to turn clockwise
@@ -38,6 +38,12 @@ class Motor:
             print 'the motor is running, please wait a moment'
 
         return self.is_motor_running()
+
+    def stop(self):
+        global motorThread
+        if motorThread is not None:
+            motorThread.clear()
+            motorThread = None
 
     def is_motor_running(self):
         return self._isRunning

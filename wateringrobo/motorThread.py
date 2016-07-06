@@ -24,38 +24,37 @@ class MotorThread(threading.Thread):
             GPIO.setup(pin, GPIO.OUT, initial=GPIO.LOW)
 
     def run(self):
-        print "Starting " + self.name
-
-        loop_counts = math.trunc(math.fabs(self.angel) / 360 * 4096)
+        loop_counts = math.trunc(math.fabs(self.angel) / 360 * 2048)
         index = 0  # pin index
-        while loop_counts > 0 and not self.exitFlag:
-            if self.angel > 0:
-                self._rollDirection = DIRECTION_CLOCK_WISE
-                # print 'roll' + str(loop_counts)
-                if index > 0:
-                    GPIO.output(self.pins[index - 1], 0)
+        try:
+            while loop_counts > 0 and not self.exitFlag:
+                if self.angel > 0:
+                    self._rollDirection = DIRECTION_CLOCK_WISE
+                    # print 'roll' + str(loop_counts)
+                    if index > 0:
+                        GPIO.output(self.pins[index - 1], 0)
+                    else:
+                        GPIO.output(self.pins[3], 0)
+                    GPIO.output(self.pins[index], 1)
+                    index += 1
+                    if index > 3:
+                        index = 0
                 else:
-                    GPIO.output(self.pins[3], 0)
-                GPIO.output(self.pins[index], 1)
-                index += 1
-                if index > 3:
-                    index = 0
-            else:
-                self._rollDirection = DIRECTION_ANTI_CLOCK_WISE
-                # print 'roll' + str(loop_counts)
-                if index < 3:
-                    GPIO.output(self.pins[index + 1], 0)
-                else:
-                    GPIO.output(self.pins[0], 0)
-                GPIO.output(self.pins[index], 1)
-                index -= 1
-                if index < 0:
-                    index = 3
-            time.sleep(0.002)
-            loop_counts -= 1
-            self.turnedCounts += 1
-
-        print "Exiting " + self.name
+                    self._rollDirection = DIRECTION_ANTI_CLOCK_WISE
+                    # print 'roll' + str(loop_counts)
+                    if index < 3:
+                        GPIO.output(self.pins[index + 1], 0)
+                    else:
+                        GPIO.output(self.pins[0], 0)
+                    GPIO.output(self.pins[index], 1)
+                    index -= 1
+                    if index < 0:
+                        index = 3
+                time.sleep(0.002)
+                loop_counts -= 1
+                self.turnedCounts += 1
+        except AttributeError:
+            pass
 
     def clear(self):
         self.exitFlag = 1

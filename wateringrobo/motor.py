@@ -1,7 +1,6 @@
 # coding=utf-8
 from motorThread import MotorThread
 
-_isRunning = False
 motorThread = None
 
 
@@ -10,18 +9,19 @@ class Motor:
         if pins is None:
             pins = []
         self.pins = pins
+        self._isRunning = False
 
-    def turnWithAngel(self, angel=30, instantChange=True):
+    def turnWithAngel(self, angel=30, instant_change=True):
         """
-        :param instantChange: change the turn direction immediately
+        :param instant_change: change the turn direction immediately
         :param angel: the angel want to turn,set negative to turn anticlockwise and set positive to turn clockwise
         :return:
         """
         if angel == 0:
             return
 
-        if not self.isMotorRunning() or instantChange:
-            self._changeMotorStatus(True)
+        if not self.is_motor_running() or instant_change:
+            self._change_motor_status(True)
 
             print 'motor turn angel: ' + str(angel) + ' in ' + (
                 'clockwise' if angel > 0 else 'anticlockwise')
@@ -33,20 +33,14 @@ class Motor:
             motorThread = MotorThread(self.pins, angel)
             motorThread.start()
 
-            self._changeMotorStatus(False)
+            self._change_motor_status(False)
         else:
             print 'the motor is running, please wait a moment'
 
-        return self.isMotorRunning()
+        return self.is_motor_running()
 
-    def isMotorRunning(self):
-        global _isRunning
-        return _isRunning
+    def is_motor_running(self):
+        return self._isRunning
 
-    def getMotorRollDirection(self):
-        global _rollDirection
-        return _rollDirection
-
-    def _changeMotorStatus(self, status=False):
-        global _isRunning
-        _isRunning = status
+    def _change_motor_status(self, status=False):
+        self._isRunning = status

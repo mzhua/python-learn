@@ -12,7 +12,7 @@ class MotorThread(threading.Thread):
     def __init__(self, pins=None, angel=30):
         threading.Thread.__init__(self)
         if pins is None:
-            pins = []
+            pins = [2, 3, 4, 14]
         self.pins = pins
         self.angel = angel
         self.turnedCounts = 0

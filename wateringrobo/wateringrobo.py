@@ -16,6 +16,9 @@ class WateringRobo:
 
         self._status = STATUS_DEFAULT
 
+        self.watering_funcs = []
+        self.stop_watering_funcs = []
+
     def _setup_gpio(self, watering_pin):
         self.waterPinIn = watering_pin
         GPIO.setup(self.waterPinIn, GPIO.IN)
@@ -32,13 +35,17 @@ class WateringRobo:
                 return
             else:
                 self._change_status(STATUS_WATERING)
-                self.callback.start_watering()
+                for func in self.watering_funcs:
+                    func()
+                # self.callback.start_watering()
         else:
             if self._get_status() == STATUS_DEFAULT:
                 return
             else:
                 self._change_status(STATUS_DEFAULT)
-                self.callback.stop_watering()
+                for func in self.stop_watering_funcs:
+                    func()
+                # self.callback.stop_watering()
 
     def start(self, pin=27, callback=None):
         if callback is not None:
@@ -67,5 +74,17 @@ class WateringRobo:
         GPIO.remove_event_detect(self.waterPinIn)
         GPIO.cleanup()
 
+    def execute(self, func):
+        func(self)
+
+    def do_what_when_need_to_watering(self, watering_funcs=None):
+        if watering_funcs is None:
+            watering_funcs = []
+        self.watering_funcs = watering_funcs
+
+    def do_what_when_need_to_stop_watering(self, stop_watering_funcs=None):
+        if stop_watering_funcs is None:
+            stop_watering_funcs = []
+        self.stop_watering_funcs = stop_watering_funcs
 
 robo = WateringRobo()

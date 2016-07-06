@@ -1,9 +1,13 @@
-from PrintTestClass import PrintTestClass
+import functools
 
 
-@PrintTestClass
-def print_test():
-    print('inside print_test')
+def a(p,q):
+    return p + q + 1
 
 
-print_test()
+def b(func, p):
+    return functools.partial(func, p,p)
+
+
+c = b(a, 10)
+print c()

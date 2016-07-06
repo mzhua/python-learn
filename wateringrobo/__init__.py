@@ -1,6 +1,7 @@
 from motor import Motor
 from wateringRoboInterface import WateringRoboInterface
 from wateringRobo import robo
+import functools
 
 
 class MainCallback(WateringRoboInterface):
@@ -16,14 +17,14 @@ class MainCallback(WateringRoboInterface):
         """
         input your code below
         """
-        self.motor.turnWithAngel(60)
+        self.motor.turn_with_angel(60)
 
     def stop_watering(self):
         WateringRoboInterface.stop_watering(self)
         """
         input your code below
         """
-        self.motor.turnWithAngel(-60)
+        self.motor.turn_with_angel(-60)
 
     def exit(self):
         WateringRoboInterface.exit(self)
@@ -33,5 +34,13 @@ class MainCallback(WateringRoboInterface):
         self.motor.stop()
 
 
-if __name__ == "__main__":
+def instruction(robo):
+    mt = Motor([2, 3, 4, 14])
+    robo.do_what_when_need_to_watering([functools.partial(mt.turn_with_angel, 60)])
+    robo.do_what_when_need_to_stop_watering([functools.partial(mt.turn_with_angel, - 60)])
     robo.start(27, MainCallback())
+
+    # if __name__ == "__main__":
+
+
+robo.execute(instruction)

@@ -27,7 +27,6 @@ class WateringRobo(object):
         return self._status
 
     def _watering(self, channel):
-        print 'level:' + str(GPIO.input(channel))
         if GPIO.input(channel) == 1:
             if self._get_status() == STATUS_WATERING:
                 return
@@ -71,6 +70,3 @@ class WateringRobo(object):
         if stop_watering_funcs is None:
             stop_watering_funcs = []
         self.stop_watering_funcs = stop_watering_funcs
-
-
-robo = WateringRobo()

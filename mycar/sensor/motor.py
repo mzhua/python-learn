@@ -61,5 +61,5 @@ class Motor:
 
     def _isMotorStarted(self):
         if not _isRunning:
-            print 'please start the motor first'
+            print 'please start the motor second'
         return True

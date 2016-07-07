@@ -61,12 +61,8 @@ class WateringRobo(object):
     def execute(self, func):
         func(self)
 
-    def do_what_when_need_to_watering(self, watering_funcs=None):
-        if watering_funcs is None:
-            watering_funcs = []
-        self.watering_funcs = watering_funcs
+    def do_what_when_need_to_watering(self, watering_func=None):
+        self.watering_funcs.append(watering_func)
 
-    def do_what_when_need_to_stop_watering(self, stop_watering_funcs=None):
-        if stop_watering_funcs is None:
-            stop_watering_funcs = []
-        self.stop_watering_funcs = stop_watering_funcs
+    def do_what_when_stop_watering(self, stop_watering_func=None):
+        self.stop_watering_funcs.append(stop_watering_func)

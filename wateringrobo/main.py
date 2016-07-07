@@ -6,8 +6,11 @@ from robo.wateringRobo import WateringRobo
 
 
 def instruction(robo):
-    robo.do_what_when_need_to_watering([functools.partial(robo.turn_with_angel, 60),functools.partial(robo.beep,17),functools.partial(robo.light,True,22)])
-    robo.do_what_when_need_to_stop_watering([functools.partial(robo.turn_with_angel, - 60),functools.partial(robo.light,False,22)])
+    robo.do_what_when_need_to_watering(functools.partial(robo.turn_with_angel, 60))
+    robo.do_what_when_need_to_watering(functools.partial(robo.beep, 17))
+    robo.do_what_when_need_to_watering(functools.partial(robo.light, True, 22))
+    robo.do_what_when_stop_watering(functools.partial(robo.turn_with_angel, - 60))
+    robo.do_what_when_stop_watering(functools.partial(robo.light, False, 22))
     robo.start(27)
 
 

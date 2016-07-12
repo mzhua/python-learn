@@ -43,11 +43,6 @@ class Motor(SensorBase):
 
         else:
             print 'the motor is running, please wait a moment'
-    #
-    # def _init_motor(self, pins):
-    #     self.pins = pins
-    #     self._is_running = False
-    #     self.motor_thread = None
 
     def stop(self):
         if self.motor_thread is not None:

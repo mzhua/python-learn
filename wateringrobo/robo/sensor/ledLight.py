@@ -2,10 +2,10 @@
 led
 """
 import RPi.GPIO as GPIO
-from sensorBase import SensorBase
-from ..wateringRobo import WateringRobo
 
+from sensorBase import SensorBase
 from ..util.equip_to import equip_to
+from ..wateringRobo import WateringRobo
 
 
 @equip_to(WateringRobo)
@@ -13,10 +13,12 @@ class LedLight(SensorBase):
     def _setup(self):
         GPIO.setmode(GPIO.BCM)
 
-    def light(self, on=True, pin=17):
+    def light_on(self, pin=17):
+        print 'light on'
         GPIO.setup(pin, GPIO.OUT)
+        GPIO.output(pin, 1)
 
-        if on:
-            GPIO.output(pin, 1)
-        else:
-            GPIO.output(pin, 0)
+    def light_off(self, pin=17):
+        print 'light off'
+        GPIO.setup(pin, GPIO.OUT)
+        GPIO.output(pin, 0)

@@ -3,6 +3,7 @@
 蜂鸣器
 """
 import time
+import thread
 import RPi.GPIO as GPIO
 
 from sensorBase import SensorBase
@@ -18,12 +19,17 @@ class Beeper(SensorBase):
     def _setup(self):
         GPIO.setmode(GPIO.BCM)
 
-    def beep(self, pin=2, seconds=0.2):
-        GPIO.setup(pin, GPIO.OUT, initial=GPIO.HIGH)
-        GPIO.output(pin, 0)
+    def _delay_turn_off(self, pin=2, seconds=0.2):
         time.sleep(seconds)
         self.mute(pin)
 
+    def beep(self, pin=2, seconds=0.2):
+        print 'beep'
+        GPIO.setup(pin, GPIO.OUT, initial=GPIO.HIGH)
+        GPIO.output(pin, 0)
+        thread.start_new_thread(self._delay_turn_off,(pin, seconds))
+
     def mute(self, pin=2):
+        print 'mute'
         GPIO.setup(pin, GPIO.OUT, initial=GPIO.HIGH)
         GPIO.output(pin, 1)

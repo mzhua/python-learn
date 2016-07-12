@@ -1,17 +1,19 @@
-import functools
 import robo.sensor.motor
 import robo.sensor.beeper
 import robo.sensor.ledLight
-from robo.wateringRobo import WateringRobo
+from robo.command import Command
+from robo.wateringRobo import robo
+
 
 
 def instruction(robo):
-    robo.do_what_when_need_to_watering(functools.partial(robo.turn_with_angel, 60))
-    robo.do_what_when_need_to_watering(functools.partial(robo.beep, 17))
-    robo.do_what_when_need_to_watering(functools.partial(robo.light, True, 22))
-    robo.do_what_when_stop_watering(functools.partial(robo.turn_with_angel, - 60))
-    robo.do_what_when_stop_watering(functools.partial(robo.light, False, 22))
+    robo.detected_soil_is_dry_then(Command.TURN_MOTOR_CLOCK_WISE)
+    robo.detected_soil_is_dry_then(Command.BEEP)
+    robo.detected_soil_is_dry_then(Command.LIGHT_ON)
+    robo.detected_soil_is_wet_then(Command.TURN_MOTOR_ANTI_CLOCK_WISE)
+    robo.detected_soil_is_wet_then(Command.LIGHT_OFF)
+    robo.detected_soil_is_wet_then(Command.MUTE)
     robo.start(27)
 
 
-WateringRobo().execute(instruction)
+robo.execute(instruction)

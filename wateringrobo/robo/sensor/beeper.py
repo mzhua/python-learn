@@ -16,8 +16,6 @@ _pinNum = None
 
 @equip_to(WateringRobo)
 class Beeper(SensorBase):
-    def _setup(self):
-        GPIO.setmode(GPIO.BCM)
 
     def _delay_turn_off(self, pin=2, seconds=0.2):
         time.sleep(seconds)

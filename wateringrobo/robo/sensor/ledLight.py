@@ -10,8 +10,6 @@ from ..wateringRobo import WateringRobo
 
 @equip_to(WateringRobo)
 class LedLight(SensorBase):
-    def _setup(self):
-        GPIO.setmode(GPIO.BCM)
 
     def light_on(self, pin=17):
         print 'light on'
